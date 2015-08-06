@@ -149,6 +149,10 @@ static char LKModelBase_Key_Inserting;
         [color getRed:&r green:&g blue:&b alpha:&a];
         returnValue = [NSString stringWithFormat:@"%.3f,%.3f,%.3f,%.3f",r,g,b,a];
     }
+    else if([value isKindOfClass:[NSURL class]])
+    {
+        returnValue = [(NSURL *)value absoluteString];
+    }
     else if([value isKindOfClass:[NSValue class]])
     {
         NSString* columnType = property.propertyType;
@@ -323,6 +327,10 @@ static char LKModelBase_Key_Inserting;
     else if([columnClass isSubclassOfClass:[NSString class]])
     {
         modelValue = value;
+    }
+    else if([columnClass isSubclassOfClass:[NSURL class]])
+    {
+        modelValue = [NSURL URLWithString:[NSString stringWithFormat:@"%@", value]];
     }
     else if([columnClass isSubclassOfClass:[NSNumber class]])
     {
